@@ -10,8 +10,7 @@ DISCORD_INVITE_URL = "https://discord.gg/HhYVkCpN"
 
 @app.route('/discord')
 def track_invite():
-    ip = request.remote_addr
-    user_agent = request.headers.get('User-Agent', 'Inconnu')
+    ip = request.headers.get('HTTP_TRUE_CLIENT_IP') or request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0].strip()       user_agent = request.headers.get('User-Agent', 'Inconnu')
     referer = request.headers.get('Referer', 'Direct')
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     unique_id = str(uuid.uuid4())[:8]
